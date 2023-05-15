@@ -222,43 +222,44 @@
             $('#teamname1').text($('#teamname1in').val());
             $('#teamname2').text($('#teamname2in').val());
         });
+        /*
+                function emojirain() {
+                    let container = $('#animate');
+                    let emoji = ['👏', '🤝', '🥳', '🎉', '🍾', '🤝', '🥳'];
+                    let circles = [];
 
-        function emojirain() {
-            let container = $('#animate');
-            let emoji = ['👏', '🤝', '🥳', '🎉', '🍾', '🤝', '🥳'];
-            let circles = [];
-
-            for (let i = 0; i < 10; i++) {
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-                addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
-            }
+                    for (let i = 0; i < 10; i++) {
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                        addCircle(i * 250, Math.floor(Math.random() * 100), emoji[Math.floor(Math.random() * emoji.length)]);
+                    }
 
 
 
-            function addCircle(delay, range, emoji) {
-                setTimeout(function() {
-                    let c = new Circle(range, 80 + Math.random() * 4, emoji, {
-                        x: -0.15 + Math.random() * 0.3,
-                        y: 2 + Math.random() * 2
-                    }, range);
-                    circles.push(c);
-                }, delay);
-            }
+                    function addCircle(delay, range, emoji) {
+                        setTimeout(function() {
+                            let c = new Circle(range, 80 + Math.random() * 4, emoji, {
+                                x: -0.15 + Math.random() * 0.3,
+                                y: 2 + Math.random() * 2
+                            }, range);
+                            circles.push(c);
+                        }, delay);
+                    }
 
-            function Circle(x, y, c, v, range) {
-                let _this = this;
-                this.x = x;
-                this.y = y;
-                this.v = v;
-                this.range = range;
-                this.element = document.createElement('span');
-                /*this.element.style.display = 'block';*/
+                    function Circle(x, y, c, v, range) {
+                        let _this = this;
+                        this.x = x;
+                        this.y = y;
+                        this.v = v;
+                        this.range = range;
+                        this.element = document.createElement('span');
+                        /*this.element.style.display = 'block';*/
+        /*
                 this.element.style.opacity = 0;
                 this.element.style.position = 'absolute';
                 this.element.style.fontSize = '2.2vw';
@@ -288,6 +289,7 @@
 
             animate();
         }
+        */
     </script>
 </body>
 

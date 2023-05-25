@@ -526,8 +526,13 @@
 
             if (currentTeam == 'teamA') {
                 $(".teamName").text("Team Rot");
+                $(".teamName").removeClass("text-info");
+                $(".teamName").addClass("text-danger");
+
             } else {
                 $(".teamName").text("Team Blau");
+                $(".teamName").removeClass("text-danger");
+                $(".teamName").addClass("text-info");
             }
 
             //remove all pins

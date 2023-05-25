@@ -186,7 +186,7 @@
                     $('#round').text("Resultat");
                     $('#gamewrapper').hide();
                     $('#winwrapper').show();
-                    emojirain();
+                    //emojirain();
                     //get the winner
                     if (t1Count > t2Count) {
                         $('#winner').text($('#teamname1').text() + ' hat gewonnen!');

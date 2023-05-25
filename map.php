@@ -225,7 +225,7 @@
             <button type="button" id="continuebtn" class="btn btn-success d-none" style="width: 15vw;" onclick="turnMade()">Weiter</button>
         </div>
 
-        <div class="progress vw-100 position-absolute bottom-0 start-0 rounded-0 bg-transparent" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress vw-100 position-absolute bottom-0 start-0 rounded-0 bg-transparent" role="progressbar" aria-label="Success example" aria-valuemin="0" aria-valuemax="100">
             <div class="progress-bar bg-success" id="progress-bar" style="width: 100%; transition: all 30s linear;"></div>
         </div>
 
@@ -388,6 +388,7 @@
         function turnMade() {
             clickingallowed = true;
             //reset the progressbar
+            progressbar.css("transform", "translateX(0%)");
             progressbar.css("transform", "none");
             if (teamAplayed == false && teamBplayed == false) {
                 console.log("no team played");
@@ -631,7 +632,6 @@
             continuebtn.removeClass("d-none");
             // get the progressbar current position
             progressbar.css("transform", progressbar.css("transform"));
-
         }
 
         function getDistanceFromLatLonInM(lat1, lon1, lat2, lon2) {

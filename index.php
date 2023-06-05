@@ -103,10 +103,10 @@
             <div id="gamewrapper">
                 <div class="row mt-5">
                     <div class="col border-end">
-                        <span class="relativefs-lg" id="teamname1">Team 1</span>
+                        <span class="relativefs-lg text-info" id="teamname1">Team Blau</span>
                     </div>
                     <div class="col">
-                        <span class="relativefs-lg" id="teamname2">Team 2</span>
+                        <span class="relativefs-lg text-danger" id="teamname2">Team Rot</span>
                     </div>
                 </div>
                 <div class="row d-flex align-items-center" style="height: 33vh;">
@@ -119,13 +119,13 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="button" id="btn1" class="btn btn-danger relativefs-sm">Team 1</button>
+                        <button type="button" id="btn1" class="btn btn-secondary relativefs-sm bs-light">Team Blau</button>
                     </div>
                     <div class="col">
                         <button type="button" id="btnnext" class="btn btn-success relativefs-sm">Start</button>
                     </div>
                     <div class="col">
-                        <button type="button" id="btn2" class="btn btn-danger relativefs-sm">Team 2</button>
+                        <button type="button" id="btn2" class="btn btn-secondary relativefs-sm bs-light">Team Rot</button>
                     </div>
                 </div>
             </div>

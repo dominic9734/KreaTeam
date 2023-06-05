@@ -226,7 +226,7 @@
         </div>
 
         <div class="progress vw-100 position-absolute bottom-0 start-0 rounded-0 bg-transparent" role="progressbar" aria-label="Success example" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar bg-success" id="progress-bar" style="width: 100%; transition: all 30s linear;"></div>
+            <div class="progress-bar bg-success" id="progress-bar" style="width: 100%; transition: all 20s linear;"></div>
         </div>
 
 
@@ -298,7 +298,6 @@
         const continuebtn = $("#continuebtn");
         const titlewrapper = $("#titlewrapper");
         const teamnamewrapper = $("#teamnamewrapper");
-        const furthestWest = 5.95590;
         const progressbar = $("#progress-bar");
         const roundendwrapper = $("#roundendwrapper");
         //coordinates CH: 
@@ -308,6 +307,7 @@
         //furthest south bottom  45.81796 
 
         const furthestNorth = 47.80845;
+        const furthestWest = 5.95590;
 
         let questiondata = []
 
@@ -478,13 +478,29 @@
             roundendwrapper.addClass("transitions");
             roundendwrapper.css("transform", "translateX(0%)");
 
-            if ($('#teamAdifferenceText').text() < $('#teamBdifferenceText').text()) {
+            const teamADifference = $('#teamAdifferenceText').text();
+            const teamBDifference = $('#teamBdifferenceText').text();
+
+            if (teamBDifference === "- KM") {
                 $("#roundwinner").text("Team Blau gewinnt diese Runde!");
+                teamBscore++;
+            } else if (teamADifference === "- KM") {
+                $("#roundwinner").text("Team Rot gewinnt diese Runde!");
                 teamAscore++;
             } else {
-                $("#roundwinner").text("Team Rot gewinnt diese Runde!");
-                teamBscore++;
+                const teamANumericPart = parseFloat(teamADifference.match(/[\d.]+/)[0]);
+                const teamBNumericPart = parseFloat(teamBDifference.match(/[\d.]+/)[0]);
+
+                if (teamANumericPart < teamBNumericPart) {
+                    $("#roundwinner").text("Team Rot gewinnt diese Runde!");
+                    teamAscore++;
+                } else if (teamBNumericPart < teamANumericPart) {
+                    $("#roundwinner").text("Team Blau gewinnt diese Runde!");
+                    teamBscore++;
+                }
             }
+
+
 
 
             setTimeout(function() {
@@ -519,6 +535,9 @@
         }
 
         function roundController(currentround, currentTeam) {
+
+            simulateClick();
+
             currentround = currentround
             questionText = questiondata[currentround].Question
             questionX = questiondata[currentround].Xcoordinate
@@ -541,10 +560,26 @@
             $(".questionText").text(questionText);
             $("#currentRound").text(currentround + 1);
             continuebtn.addClass("d-none");
-            progressbar.on("transitionend", function(event) {
-                turnMade()
-            });
         }
+
+        function simulateClick() {
+            const svg = svgmap
+            const svgElement = svg.get(0);
+            const svgRect = svgElement.getBoundingClientRect();
+            const centerX = svgRect.left + svgRect.width / 2;
+            const centerY = svgRect.top + svgRect.height / 2;
+
+            const clickEvent = new MouseEvent("click", {
+                view: window,
+                bubbles: true,
+                cancelable: true,
+                clientX: centerX,
+                clientY: centerY
+            });
+
+            svgElement.dispatchEvent(clickEvent);
+        }
+
 
 
         //on click, get mouse position relative to svgmap
@@ -575,6 +610,16 @@
 
             let toCoordinateX = mouseX * Xmultiplier;
             let toCoordinateY = mouseY * Ymultiplier;
+
+            /*
+                        let AbsoluteX = 1000000;
+            let AbsoluteY = 1000000;
+
+            AbsoluteX = toCoordinateX + furthestWest;
+            AbsoluteY = ((toCoordinateY - furthestNorth) * -1);
+            */
+
+
 
             let AbsoluteX = toCoordinateX + furthestWest;
             let AbsoluteY = ((toCoordinateY - furthestNorth) * -1);
@@ -608,22 +653,37 @@
             let questionYconverted = (((questionY - furthestNorth) * -1) / Ymultiplier) + svgRectSizing.top;
 
             confirmbtn.on("click", function(e) {
-                turnEnded(questionXconverted, questionYconverted, questionX, questionY, AbsoluteX, AbsoluteY, questionX, questionY, AbsoluteX, AbsoluteY);
+                const valid = true;
+                turnEnded(valid, questionXconverted, questionYconverted, questionX, questionY, AbsoluteX, AbsoluteY, questionX, questionY, AbsoluteX, AbsoluteY);
+            });
+            progressbar.on("transitionend", function(event) {
+                console.log("transition ended");
+                const valid = false;
+                turnEnded(valid, questionXconverted, questionYconverted, questionX, questionY, AbsoluteX, AbsoluteY, questionX, questionY, AbsoluteX, AbsoluteY);
             });
         });
 
-        function turnEnded(questionXconverted, questionYconverted, questionX, questionY, AbsoluteX, AbsoluteY, questionX, questionY, AbsoluteX, AbsoluteY) {
+        function turnEnded(valid, questionXconverted, questionYconverted, questionX, questionY, AbsoluteX, AbsoluteY, questionX, questionY, AbsoluteX, AbsoluteY) {
             clickingallowed = false;
-
             if (currentTeam == "teamA") {
-                let distanceMeters = getDistanceFromLatLonInM(questionX, questionY, AbsoluteX, AbsoluteY);
-                distanceMeters = distanceMeters / 1000;
-                setScore(distanceMeters.toFixed(2) + " KM", "A");
+                if (valid == false) {
+                    console.log("invalid");
+                    setScore("- KM", "A");
+                } else {
+                    let distanceMeters = getDistanceFromLatLonInM(questionX, questionY, AbsoluteX, AbsoluteY);
+                    distanceMeters = distanceMeters / 1000;
+                    setScore(distanceMeters.toFixed(2) + " KM", "A");
+                }
             }
             if (currentTeam == "teamB") {
-                let distanceMeters = getDistanceFromLatLonInM(questionX, questionY, AbsoluteX, AbsoluteY);
-                distanceKM = distanceMeters / 1000;
-                setScore(distanceKM.toFixed(2) + " KM", "B");
+                if (valid == false) {
+                    console.log("invalid");
+                    setScore("- KM", "A");
+                } else {
+                    let distanceMeters = getDistanceFromLatLonInM(questionX, questionY, AbsoluteX, AbsoluteY);
+                    distanceKM = distanceMeters / 1000;
+                    setScore(distanceKM.toFixed(2) + " KM", "B");
+                }
             }
 
             $(".pin").removeClass("pinremove");

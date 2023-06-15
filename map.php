@@ -92,18 +92,16 @@
                     </div>
                 </div>
                 <div class="row" data-bs-theme="dark">
-                    <form action="" class="m-0 mt-3">
                         <div class="input-group">
                             <input type="text" aria-label="First name" class="form-control-none border-white">
                             <input type="text" aria-label="Last name" class="form-control-none border-white">
                             <input type="text" aria-label="Last name" class="form-control-none border-white">
-                            <button type="submit" class="btn btn-outline-light" name="submit" id="submit">
+                            <button type="button" class="btn btn-outline-light" name="submit" id="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="svgpin" fill="white" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
                                 </svg>
                             </button>
                         </div>
-                    </form>
                 </div>
                 <div class="container text-start relativefs-sm mt-3">
                     <?php
@@ -164,10 +162,10 @@
                 <div class="container text-center">
                     <div class="row">
                         <div class="col">
-                            <span class="relativefs">Team Blau</span>
+                            <span class="relativefs">Team Rot</span>
                         </div>
                         <div class="col">
-                            <span class="relativefs">Team Rot</span>
+                            <span class="relativefs">Team Blau</span>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -191,10 +189,10 @@
                 <div class="container text-center">
                     <div class="row">
                         <div class="col">
-                            <span class="relativefs">Team Blau</span>
+                            <span class="relativefs">Team Rot</span>
                         </div>
                         <div class="col">
-                            <span class="relativefs">Team Rot</span>
+                            <span class="relativefs">Team Blau</span>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -206,7 +204,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <span class="relativefs-lg" id="teamAscore"></span>
+                                <span class="relativefs-lg" id="gameWinner"></span>
                             </div>
                         </div>
                     </div>
@@ -477,30 +475,36 @@
             $(".pin").remove();
             roundendwrapper.addClass("transitions");
             roundendwrapper.css("transform", "translateX(0%)");
-
             const teamADifference = $('#teamAdifferenceText').text();
             const teamBDifference = $('#teamBdifferenceText').text();
 
-            if (teamBDifference === "- KM") {
-                $("#roundwinner").text("Team Blau gewinnt diese Runde!");
-                teamBscore++;
-            } else if (teamADifference === "- KM") {
-                $("#roundwinner").text("Team Rot gewinnt diese Runde!");
-                teamAscore++;
-            } else {
-                const teamANumericPart = parseFloat(teamADifference.match(/[\d.]+/)[0]);
-                const teamBNumericPart = parseFloat(teamBDifference.match(/[\d.]+/)[0]);
-
-                if (teamANumericPart < teamBNumericPart) {
+            switch (true) {
+                case teamADifference === "-" && teamBDifference === "-":
+                    $("#roundwinner").text("Unentschieden!");
+                    break;
+                case teamBDifference === "-" && teamADifference !== "-":
                     $("#roundwinner").text("Team Rot gewinnt diese Runde!");
-                    teamAscore++;
-                } else if (teamBNumericPart < teamANumericPart) {
-                    $("#roundwinner").text("Team Blau gewinnt diese Runde!");
                     teamBscore++;
-                }
+                    break;
+                case teamADifference === "-" && teamBDifference !== "-":
+                    $("#roundwinner").text("Team Blau gewinnt diese Runde!");
+                    teamAscore++;
+                    break;
+                default:
+                    const teamANumericPart = parseFloat(teamADifference.match(/[\d.]+/)[0]);
+                    const teamBNumericPart = parseFloat(teamBDifference.match(/[\d.]+/)[0]);
+
+                    switch (true) {
+                        case teamANumericPart < teamBNumericPart:
+                            $("#roundwinner").text("Team Rot gewinnt diese Runde!");
+                            teamAscore++;
+                            break;
+                        case teamBNumericPart < teamANumericPart:
+                            $("#roundwinner").text("Team Blau gewinnt diese Runde!");
+                            teamBscore++;
+                            break;
+                    }
             }
-
-
 
 
             setTimeout(function() {
@@ -510,7 +514,7 @@
                     roundendwrapper.css("transform", "translateX(100%)");
 
                 }, 500);
-                if (currentround == 10) {
+                if (currentround == 2) {
                     gameFinished();
                     return;
                 }
@@ -521,13 +525,14 @@
         function setScore(value, team) {
             $('#team' + team + 'differenceText').text(value);
             $('#team' + team + 'differenceText').text(value);
+            console.log($('#team' + team + 'differenceText'))
         }
 
         function gameFinished() {
             $("#gamefinished").css("transform", "translateX(0%)");
             $("#finalScoreA").text(teamAscore);
             $("#finalScoreB").text(teamBscore);
-            if ($('#finalScoreA').text() < $('#finalScoreB').text()) {
+            if (teamAscore < teamBscore) {
                 $("#gameWinner").text("Team Blau hat gewonnen!");
             } else {
                 $("#gameWinner").text("Team Rot hat gewonnen!");
@@ -656,6 +661,7 @@
                 const valid = true;
                 turnEnded(valid, questionXconverted, questionYconverted, questionX, questionY, AbsoluteX, AbsoluteY, questionX, questionY, AbsoluteX, AbsoluteY);
             });
+
             progressbar.on("transitionend", function(event) {
                 console.log("transition ended");
                 const valid = false;
@@ -668,7 +674,7 @@
             if (currentTeam == "teamA") {
                 if (valid == false) {
                     console.log("invalid");
-                    setScore("- KM", "A");
+                    setScore("-", "A");
                 } else {
                     let distanceMeters = getDistanceFromLatLonInM(questionX, questionY, AbsoluteX, AbsoluteY);
                     distanceMeters = distanceMeters / 1000;
@@ -678,23 +684,28 @@
             if (currentTeam == "teamB") {
                 if (valid == false) {
                     console.log("invalid");
-                    setScore("- KM", "A");
+                    setScore("-", "B");
                 } else {
                     let distanceMeters = getDistanceFromLatLonInM(questionX, questionY, AbsoluteX, AbsoluteY);
                     distanceKM = distanceMeters / 1000;
                     setScore(distanceKM.toFixed(2) + " KM", "B");
                 }
             }
-
             $(".pin").removeClass("pinremove");
             //remove all answerpin
             $(".answerpin").remove();
             if (teamBplayed == true && teamAplayed == true) {
+                $(".pin").removeClass("d-none");
                 const answerpin = '<div class="d-flex justify-content-center align-items-center position-absolute pin answerpin" style=" top: ' + questionYconverted + 'px; left: ' + questionXconverted + 'px;"><svg xmlns="http: //www.w3.org/2000/svg" class="svgpin" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M384 192c0 87.4-117 243-168.3 307.2c-12.3 15.3-35.1 15.3-47.4 0C117 435 0 279.4 0 192C0 86 86 0 192 0S384 86 384 192z"/></svg></div>';
                 mapcontainer.append(answerpin);
             }
             confirmbtn.addClass("d-none");
+            continuebtn.on("click", function(e) {
+                $(".pin").addClass("d-none");
+            });
             continuebtn.removeClass("d-none");
+
+
             // get the progressbar current position
             progressbar.css("transform", progressbar.css("transform"));
         }

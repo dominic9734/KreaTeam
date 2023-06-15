@@ -1,6 +1,6 @@
 [
   {
-    "Question": "Wo ist das Nordportal Gotthard Tunnel?",
+    "Question": "Wo liegt das Nordportal des Gotthard Tunnels?",
     "Xcoordinate": 8.591801217124857,
     "Ycoordinate": 46.66765153902977
   },
@@ -10,22 +10,22 @@
     "Ycoordinate": 46.662606760508
   },
   {
-    "Question": "Wo liegt der höchste Berg der Schweiz?",
+    "Question": "Wo liegt der höchste Berg der Schweiz (Dufourspitze)?",
     "Xcoordinate": 7.867582337340097,
     "Ycoordinate": 45.93711562360531
   },
   {
-    "Question": "Wo liegt der Schillerstein?",
+    "Question": "Wo liegt der aus Willhelm Tell Schillerstein?",
     "Xcoordinate": 8.596556655673682,
     "Ycoordinate": 46.98280573705523
   },
   {
-    "Question": "Wo liegt das Cern?",
+    "Question": "Wo liegt das Cern (Besucherzentrum)?",
     "Xcoordinate": 6.0547755570531105,
     "Ycoordinate": 46.23154039349329
   },
   {
-    "Question": "Wo liegt die längste Brücke der Schweiz?",
+    "Question": "Wo liegt die längste Brücke der Schweiz (Charles Kuonen Brücke)?",
     "Xcoordinate": 7.803748670076934,
     "Ycoordinate": 46.10025349559906
   },
@@ -40,7 +40,7 @@
     "Ycoordinate": 47.60071568996205
   },
   {
-    "Question": "Wo liegt AeBo?",
+    "Question": "Wo ist AeBo?",
     "Xcoordinate": 7.595468270317251,
     "Ycoordinate": 47.55296321931332
   }

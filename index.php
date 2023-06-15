@@ -12,6 +12,9 @@
         .relativefs-sm {
             font-size: 2.2vw;
         }
+        .relativefs-xsm {
+            font-size: 1vw;
+        }
 
         .relativefs {
             font-size: 4.2vw;
@@ -111,10 +114,10 @@
                 </div>
                 <div class="row d-flex align-items-center" style="height: 33vh;">
                     <div class="col">
-                        <span class="relativefs" id="t1Count"></span>
+                        <span class="relativefs" id="t1Count">0</span>
                     </div>
                     <div class="col">
-                        <span class="relativefs" id="t2Count"></span>
+                        <span class="relativefs" id="t2Count">0</span>
                     </div>
                 </div>
                 <div class="row">
@@ -124,8 +127,13 @@
                     <div class="col">
                         <button type="button" id="btnnext" class="btn btn-success relativefs-sm">Start</button>
                     </div>
-                    <div class="col">
+                    <div class="col mb-3">
                         <button type="button" id="btn2" class="btn btn-secondary relativefs-sm bs-light">Team Rot</button>
+                    </div>
+                </div>
+                <div class="row h-100">
+                    <div class="col">
+                        <button type="button" id="btnroundback" class="btn btn-secondary relativefs-xsm">Reset</button>
                     </div>
                 </div>
             </div>
@@ -140,7 +148,6 @@
                         <span class="input-group-text">-</span>
                         <input type="text" class="form-control" placeholder="Team 2" id="teamname2in">
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -161,6 +168,9 @@
             let t2Count = 0;
             let round = 0;
 
+            let t1countbackup = 0;
+            let t2countbackup = 0;
+
             let t1turn = true;
             let t2turn = true;
 
@@ -179,8 +189,20 @@
                 $('#t2Count').text(t2Count);
                 t2turn = false;
             });
+            $('#btnroundback').click(function() {
+                t2turn = true;
+                t1turn = true;
+                t1Count = t1countbackup;
+                t2Count = t2countbackup;
+
+                $('#t1Count').text(t1Count);
+                $('#t2Count').text(t2Count);
+            });
             $('#btnnext').click(function() {
                 $('#btnnext').text("Nächste Runde");
+
+                t1countbackup = t1Count;
+                t2countbackup = t2Count;
 
                 if (round == 10) {
                     $('#round').text("Resultat");
